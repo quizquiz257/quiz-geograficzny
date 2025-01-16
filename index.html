@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Geograficzny</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2C3E50;
+        }
+
+        #quiz-container {
+            background-color: white;
+            width: 80%;
+            max-width: 700px;
+            margin: 30px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .question-container {
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        .question-container p {
+            font-size: 1.2rem;
+        }
+
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.correct {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        button.incorrect {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        button:hover:not(.correct):not(.incorrect) {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        #score-container {
+            display: none;
+            font-size: 1.5rem;
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .restart-button {
+            background-color: #3498db;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .restart-button:hover {
+            background-color: #2980b9;
+        }
+
+        .summary-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-container li {
+            margin: 10px 0;
+        }
+
+        .correct-answer {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .incorrect-answer {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        #signature {
+            font-size: 1rem;
+            color: gray;
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .link {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quiz Geograficzny</h1>
+    <div id="quiz-container">
+        <div id="question-status">Pytanie 1 z 7</div>
+
+        <!-- Pytania -->
+        <div class="question-container active" id="question1">
+            <p>Który kontynent jest największy pod względem powierzchni?</p>
+            <button onclick="checkAnswer(1, true, 'Azja')">Azja</button>
+            <button onclick="checkAnswer(1, false, 'Afryka')">Afryka</button>
+            <button onclick="checkAnswer(1, false, 'Ameryka Północna')">Ameryka Północna</button>
+            <button onclick="checkAnswer(1, false, 'Antarktyda')">Antarktyda</button>
+        </div>
+
+        <div class="question-container" id="question2">
+            <p>Jak nazywa się największy system rzeczny na świecie?</p>
+            <button onclick="checkAnswer(2, true, 'Amazonka')">Amazonka</button>
+            <button onclick="checkAnswer(2, false, 'Nil')">Nil</button>
+            <button onclick="checkAnswer(2, false, 'Jangcy')">Jangcy</button>
+            <button onclick="checkAnswer(2, false, 'Missisipi')">Missisipi</button>
+        </div>
+
+        <div class="question-container" id="question3">
+            <p>Jaki gaz jest główną przyczyną globalnego ocieplenia?</p>
+            <button onclick="checkAnswer(3, true, 'Dwutlenek węgla')">Dwutlenek węgla</button>
+            <button onclick="checkAnswer(3, false, 'Azot')">Azot</button>
+            <button onclick="checkAnswer(3, false, 'Hel')">Hel</button>
+            <button onclick="checkAnswer(3, false, 'Tlen')">Tlen</button>
+        </div>
+
+        <div class="question-container" id="question4">
+            <p>Jak nazywa się najwyższy szczyt świata?</p>
+            <button onclick="checkAnswer(4, true, 'Mount Everest')">Mount Everest</button>
+            <button onclick="checkAnswer(4, false, 'K2')">K2</button>
+            <button onclick="checkAnswer(4, false, 'Lhotse')">Lhotse</button>
+            <button onclick="checkAnswer(4, false, 'Makalu')">Makalu</button>
+        </div>
+
+        <div class="question-container" id="question5">
+            <p>Które miasto jest stolicą Japonii?</p>
+            <button onclick="checkAnswer(5, true, 'Tokio')">Tokio</button>
+            <button onclick="checkAnswer(5, false, 'Osaka')">Osaka</button>
+            <button onclick="checkAnswer(5, false, 'Kioto')">Kioto</button>
+            <button onclick="checkAnswer(5, false, 'Nagoya')">Nagoya</button>
+        </div>
+
+        <div class="question-container" id="question6">
+            <p>Jaki kraj ma największą powierzchnię?</p>
+            <button onclick="checkAnswer(6, true, 'Rosja')">Rosja</button>
+            <button onclick="checkAnswer(6, false, 'Kanada')">Kanada</button>
+            <button onclick="checkAnswer(6, false, 'Chiny')">Chiny</button>
+            <button onclick="checkAnswer(6, false, 'USA')">USA</button>
+        </div>
+
+        <div class="question-container" id="question7">
+            <p>W którym oceanie znajduje się Wielka Rafa Koralowa?</p>
+            <button onclick="checkAnswer(7, true, 'Ocean Spokojny')">Ocean Spokojny</button>
+            <button onclick="checkAnswer(7, false, 'Ocean Atlantycki')">Ocean Atlantycki</button>
+            <button onclick="checkAnswer(7, false, 'Ocean Indyjski')">Ocean Indyjski</button>
+            <button onclick="checkAnswer(7, false, 'Ocean Arktyczny')">Ocean Arktyczny</button>
+        </div>
+    </div>
+
+    <div id="score-container">
+        <div class="summary-container">
+            <h2>Podsumowanie</h2>
+            <p>Twój wynik: <span id="score"></span> na 7</p>
+            <ul id="correct-answers-list"></ul>
+            <button class="restart-button" onclick="restartQuiz()">Zagraj ponownie</button>
+        </div>
+        <div id="signature">Oliwia Górska 3C</div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let score = 0;
+        const totalQuestions = 7;
+        const userAnswers = [];
+
+        const questions = [
+            "Który kontynent jest największy pod względem powierzchni?",
+            "Jak nazywa się największy system rzeczny na świecie?",
+            "Jaki gaz jest główną przyczyną globalnego ocieplenia?",
+            "Jak nazywa się najwyższy szczyt świata?",
+            "Które miasto jest stolicą Japonii?",
+            "Jaki kraj ma największą powierzchnię?",
+            "W którym oceanie znajduje się Wielka Rafa Koralowa?"
+        ];
+
+        const correctAnswers = [
+            { answer: "Azja", link: "https://pl.wikipedia.org/wiki/Azja" },
+            { answer: "Amazonka", link: "https://pl.wikipedia.org/wiki/Amazonka" },
+            { answer: "Dwutlenek węgla", link: "https://pl.wikipedia.org/wiki/Dwutlenek_w%C4%99gla" },
+            { answer: "Mount Everest", link: "https://pl.wikipedia.org/wiki/Mount_Everest" },
+            { answer: "Tokio", link: "https://pl.wikipedia.org/wiki/Tokio" },
+            { answer: "Rosja", link: "https://pl.wikipedia.org/wiki/Rosja" },
+            { answer: "Ocean Spokojny", link: "https://pl.wikipedia.org/wiki/Ocean_Spokojny" }
+        ];
+
+        function checkAnswer(questionNumber, isCorrect, userAnswer) {
+            userAnswers.push({ questionNumber, userAnswer });
+            const buttons = document.querySelectorAll(`#question${questionNumber} button`);
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Usuwanie hiperłącza z odpowiedzi użytkownika
+            if (isCorrect) {
+                score++;
+                event.target.classList.add("correct");
+                event.target.innerHTML = event.target.innerHTML.replace(/<a[^>]*>/g, "").replace(/<\/a>/g, "");
+            } else {
+                event.target.classList.add("incorrect");
+                event.target.innerHTML = event.target.innerHTML.replace(/<a[^>]*>/g, "").replace(/<\/a>/g, "");
+            }
+
+            setTimeout(() => {
+                document.getElementById(`question${questionNumber}`).classList.remove('active');
+                if (questionNumber < totalQuestions) {
+                    currentQuestion++;
+                    document.getElementById(`question${currentQuestion}`).classList.add('active');
+                    document.getElementById('question-status').innerText = `Pytanie ${currentQuestion} z ${totalQuestions}`;
+                } else {
+                    showSummary();
+                }
+            }, 1000);
+        }
+
+        function showSummary() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('score-container').style.display = 'block';
+            document.getElementById('score').innerText = score;
+
+            const answersList = document.getElementById('correct-answers-list');
+            answersList.innerHTML = "";
+
+            userAnswers.forEach((answer, index) => {
+                const li = document.createElement('li');
+                const userAnswerClass = answer.userAnswer === correctAnswers[index].answer ? "correct-answer" : "incorrect-answer";
+                li.innerHTML = `
+                    <strong>${questions[index]}</strong><br>
+                    Twoja odpowiedź: <span class="${userAnswerClass}">${answer.userAnswer}</span><br>
+                    Poprawna odpowiedź: <strong><a href="${correctAnswers[index].link}" target="_blank" class="link">${correctAnswers[index].answer}</a></strong>
+                `;
+                answersList.appendChild(li);
+            });
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            score = 0;
+            userAnswers.length = 0;
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('score-container').style.display = 'none';
+
+            document.getElementById('question-status').innerText = `Pytanie 1 z ${totalQuestions}`;
+            document.querySelectorAll(".question-container").forEach((q, i) => {
+                q.classList.remove('active');
+                if (i === 0) q.classList.add('active');
+            });
+
+            document.querySelectorAll("button").forEach(btn => {
+                btn.classList.remove("correct", "incorrect");
+                btn.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
